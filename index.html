@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patrick Brazell | Business + Data + AI</title>
+  <meta name="description" content="Operations leader evolving into business analytics and AI. Nearly a decade of real-world impact, now building the future with data and intelligent systems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #08080a;
+      --bg-elevated: #101014;
+      --bg-card: #14141a;
+      --bg-card-hover: #1a1a22;
+      --border: #2a2a35;
+      --border-glow: rgba(255, 90, 31, 0.4);
+      --text: #f5f5f7;
+      --text-muted: #a8a8b3;
+      --text-dim: #6e6e7a;
+      --accent: #ff5a1f;
+      --accent-bright: #ff7a45;
+      --accent-dim: rgba(255, 90, 31, 0.14);
+      --accent-glow: rgba(255, 90, 31, 0.45);
+      --success: #34d399;
+      --cert: #60a5fa;
+      --radius: 16px;
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none !important;
+      opacity: 0.5;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      isolation: isolate;
+    }
+
+    /* Ensure navigation links always receive clicks */
+    a, .btn, .icon-link, .contact-link, .nav-links a, .nav-cta {
+      pointer-events: auto !important;
+      position: relative;
+      z-index: 2;
+    }
+
+    a { color: var(--accent-bright); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--accent); }
+
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0.85rem 1.5rem;
+      background: rgba(8, 8, 10, 0.78);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .nav.scrolled {
+      border-bottom-color: var(--border);
+      background: rgba(8, 8, 10, 0.94);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+      color: var(--text); letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 0.1rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted); font-size: 0.875rem; font-weight: 500;
+      padding: 0.45rem 0.8rem; border-radius: 8px; transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text); background: var(--accent-dim);
+    }
+    .nav-cta {
+      background: var(--accent) !important; color: #fff !important;
+      font-weight: 600 !important; margin-left: 0.4rem;
+    }
+    .nav-cta:hover { background: var(--accent-bright) !important; color: #fff !important; }
+    .menu-btn {
+      display: none; background: none; border: 1px solid var(--border);
+      color: var(--text); width: 42px; height: 42px; border-radius: 10px;
+      cursor: pointer; align-items: center; justify-content: center;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 7rem 1.5rem 5rem;
+      max-width: 1200px; margin: 0 auto; position: relative;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent-dim);
+      border: 1px solid rgba(255, 90, 31, 0.4);
+      color: var(--accent-bright);
+      font-size: 0.8rem; font-weight: 600;
+      padding: 0.4rem 0.95rem; border-radius: 999px;
+      margin-bottom: 1.5rem; width: fit-content;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-badge .dot {
+      width: 8px; height: 8px; background: var(--accent); border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.4rem, 11vw, 5.8rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 1.02;
+      margin-bottom: 1.1rem; animation: fadeUp 0.7s 0.08s ease both;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero-story {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+      font-weight: 500; color: var(--text-muted);
+      margin-bottom: 0.65rem; animation: fadeUp 0.7s 0.15s ease both;
+    }
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.8vw, 2rem);
+      font-weight: 700; color: var(--text);
+      margin-bottom: 1.35rem; letter-spacing: -0.02em;
+      animation: fadeUp 0.7s 0.22s ease both;
+    }
+    .hero-tagline .plus { color: var(--accent); margin: 0 0.15rem; }
+    .hero-desc {
+      max-width: 36rem; color: var(--text-muted); font-size: 1.05rem;
+      margin-bottom: 2rem; animation: fadeUp 0.7s 0.28s ease both;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+      margin-bottom: 2rem; animation: fadeUp 0.7s 0.34s ease both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.25rem; border-radius: 12px;
+      font-weight: 600; font-size: 0.92rem; font-family: var(--font-body);
+      transition: all 0.25s; border: none; cursor: pointer; text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 0 28px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      background: var(--accent-bright); color: #fff;
+      transform: translateY(-2px); box-shadow: 0 4px 32px var(--accent-glow);
+    }
+    .btn-linkedin {
+      background: #0a66c2; color: #fff;
+      box-shadow: 0 0 20px rgba(10, 102, 194, 0.35);
+    }
+    .btn-linkedin:hover {
+      background: #0c7cd5; color: #fff;
+      transform: translateY(-2px); box-shadow: 0 4px 28px rgba(10, 102, 194, 0.5);
+    }
+    .btn-ghost {
+      background: transparent; color: var(--text); border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent); background: var(--accent-dim); color: var(--text);
+    }
+    .hero-links {
+      display: flex; flex-wrap: wrap; gap: 0.65rem;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .icon-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-muted); transition: all 0.25s;
+    }
+    .icon-link:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-dim); transform: translateY(-2px);
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+      color: var(--text-dim); font-size: 0.75rem;
+      animation: fadeUp 0.7s 0.55s ease both;
+    }
+    .scroll-hint .chevron { animation: bounce 2s ease infinite; }
+
+    section {
+      padding: 5.25rem 1.5rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--accent); margin-bottom: 0.55rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.85rem, 4vw, 2.45rem);
+      font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.7rem;
+    }
+    .section-intro {
+      color: var(--text-muted); font-size: 1.05rem;
+      max-width: 40rem; margin-bottom: 2.5rem;
+    }
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1.45fr 1fr; gap: 1.75rem; align-items: start;
+    }
+    .about-story {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.85rem;
+    }
+    .about-story p {
+      color: var(--text-muted); margin-bottom: 1.1rem; font-size: 1.02rem;
+    }
+    .about-story p:last-child { margin-bottom: 0; }
+    .about-story strong { color: var(--text); font-weight: 600; }
+    .about-stats { display: flex; flex-direction: column; gap: 0.9rem; }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.4rem;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .stat-card:hover {
+      border-color: var(--border-glow); transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+    }
+    .stat-value {
+      font-family: var(--font-display); font-size: 1.9rem; font-weight: 700;
+      color: var(--accent); letter-spacing: -0.02em; line-height: 1.2;
+    }
+    .stat-label { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.15rem;
+    }
+    .skill-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      transition: all 0.3s; cursor: pointer; user-select: none;
+    }
+    .skill-card:hover, .skill-card.open {
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.35), 0 0 24px rgba(255,90,31,0.06);
+    }
+    .skill-card-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    }
+    .skill-card-left { display: flex; align-items: center; gap: 0.9rem; }
+    .skill-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--accent-dim);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); flex-shrink: 0;
+    }
+    .skill-card h3 {
+      font-family: var(--font-display); font-size: 1.08rem; font-weight: 600;
+    }
+    .skill-chevron {
+      color: var(--text-dim); transition: transform 0.3s, color 0.2s;
+    }
+    .skill-card.open .skill-chevron {
+      transform: rotate(180deg); color: var(--accent);
+    }
+    .skill-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, margin 0.3s ease, opacity 0.3s ease;
+      opacity: 0; margin-top: 0;
+    }
+    .skill-card.open .skill-body {
+      max-height: 220px; opacity: 1; margin-top: 1.15rem;
+    }
+    .skill-list {
+      display: flex; flex-direction: column; gap: 0.45rem;
+      list-style: none;
+    }
+    .skill-list li {
+      color: var(--text); font-size: 0.95rem; font-weight: 500;
+      padding: 0.4rem 0.7rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .skill-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: all 0.35s; display: flex; flex-direction: column; height: 100%;
+    }
+    .project-card:hover {
+      border-color: var(--border-glow); transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.4), 0 0 40px rgba(255,90,31,0.08);
+    }
+    .project-visual {
+      height: 150px; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #1a1210 0%, #0c0c12 50%, #16121a 100%);
+    }
+    .project-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 28% 40%, rgba(255,90,31,0.28) 0%, transparent 50%),
+        radial-gradient(circle at 72% 65%, rgba(255,120,50,0.12) 0%, transparent 45%);
+      pointer-events: none;
+    }
+    .project-visual .grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,90,31,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,90,31,0.07) 1px, transparent 1px);
+      background-size: 22px 22px; opacity: 0.65;
+      pointer-events: none;
+    }
+    .project-visual .icon-wrap {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); opacity: 0.9;
+      pointer-events: none;
+    }
+    .project-body {
+      padding: 1.45rem; display: flex; flex-direction: column; flex: 1;
+    }
+    .project-status {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.75rem; font-weight: 600; color: var(--accent-bright);
+      background: var(--accent-dim); padding: 0.25rem 0.65rem;
+      border-radius: 999px; width: fit-content; margin-bottom: 0.75rem;
+    }
+    .project-status .pulse-dot {
+      width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+      animation: pulse 1.8s ease infinite;
+    }
+    .project-card h3 {
+      font-family: var(--font-display); font-size: 1.18rem; font-weight: 600;
+      margin-bottom: 0.55rem; letter-spacing: -0.02em;
+    }
+    .project-card p {
+      color: var(--text-muted); font-size: 0.92rem; flex: 1; margin-bottom: 1rem;
+    }
+    .project-meta {
+      font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .project-meta strong { color: var(--text-muted); font-weight: 600; }
+    .project-tech {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.15rem;
+    }
+    .tech-pill {
+      font-size: 0.72rem; font-weight: 500; color: var(--text-dim);
+      border: 1px solid var(--border); padding: 0.2rem 0.5rem; border-radius: 6px;
+    }
+    .project-actions { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+    .btn-sm { padding: 0.5rem 0.95rem; font-size: 0.85rem; border-radius: 10px; }
+
+    .exp-cards { display: flex; flex-direction: column; gap: 1.1rem; }
+    .exp-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; transition: border-color 0.25s;
+    }
+    .exp-card.open { border-color: var(--border-glow); }
+    .exp-header {
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 1rem;
+      padding: 1.3rem 1.45rem; cursor: pointer; user-select: none;
+      transition: background 0.2s;
+    }
+    .exp-header:hover { background: rgba(255,255,255,0.02); }
+    .exp-header-left h3 {
+      font-family: var(--font-display); font-size: 1.12rem; font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .exp-company { color: var(--accent-bright); font-weight: 500; font-size: 0.95rem; }
+    .exp-meta {
+      display: flex; align-items: center; gap: 1rem;
+      color: var(--text-dim); font-size: 0.875rem;
+    }
+    .exp-toggle {
+      width: 36px; height: 36px; border-radius: 10px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); display: flex; align-items: center;
+      justify-content: center; transition: all 0.25s; flex-shrink: 0;
+    }
+    .exp-card.open .exp-toggle {
+      background: var(--accent-dim); border-color: var(--accent);
+      color: var(--accent); transform: rotate(45deg);
+    }
+    .exp-body { max-height: 0; overflow: hidden; transition: max-height 0.45s ease; }
+    .exp-card.open .exp-body { max-height: 1300px; }
+    .exp-details {
+      padding: 0 1.45rem 1.45rem; border-top: 1px solid var(--border); padding-top: 1.2rem;
+    }
+    .impact-row {
+      display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1.15rem;
+    }
+    .impact-pill {
+      background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3);
+      color: var(--success); font-size: 0.85rem; font-weight: 600;
+      padding: 0.4rem 0.85rem; border-radius: 8px;
+    }
+    .exp-bridge {
+      background: var(--accent-dim); border: 1px solid rgba(255,90,31,0.25);
+      border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.15rem;
+      font-size: 0.92rem; color: var(--text-muted);
+    }
+    .exp-bridge strong { color: var(--accent-bright); }
+    .exp-details ul {
+      list-style: none; display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .exp-details li {
+      position: relative; padding-left: 1.15rem;
+      color: var(--text-muted); font-size: 0.95rem;
+    }
+    .exp-details li::before {
+      content: ''; position: absolute; left: 0; top: 0.55rem;
+      width: 6px; height: 6px; background: var(--accent); border-radius: 50%; opacity: 0.85;
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.25rem;
+      align-items: stretch;
+      margin-bottom: 0.25rem;
+    }
+    .edu-featured {
+      background: linear-gradient(145deg, rgba(255,90,31,0.14) 0%, var(--bg-card) 55%);
+      border: 1px solid rgba(255,90,31,0.4);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.85rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .edu-featured::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255,90,31,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .edu-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--accent-bright);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+    .edu-status .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+    .edu-featured h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .edu-school {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      margin-bottom: 0.2rem;
+      line-height: 1.45;
+    }
+    .edu-progress-wrap {
+      margin-top: 1.25rem;
+      margin-bottom: 0.85rem;
+    }
+    .edu-progress-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .edu-progress-bar {
+      height: 100%;
+      width: 12%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff5a1f 0%, #ff8a4c 55%, #ffb347 100%);
+      box-shadow: 0 0 12px rgba(255, 90, 31, 0.45);
+    }
+    .edu-timeline {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-top: auto;
+    }
+    .edu-timeline .grad-date {
+      color: var(--accent-bright);
+      font-weight: 600;
+    }
+    .edu-secondary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .edu-secondary h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.01em;
+    }
+    .edu-secondary .edu-school {
+      font-size: 0.95rem;
+    }
+    .edu-secondary .edu-dates {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-top: 0.65rem;
+    }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.75rem;
+    }
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(96,165,250,0.25);
+      border-radius: 12px;
+      padding: 1.1rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .cert-card:hover {
+      border-color: rgba(96,165,250,0.5);
+      transform: translateY(-2px);
+    }
+    .cert-card h4 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .cert-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--cert);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    @media (max-width: 800px) {
+      .edu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-section { max-width: none; padding: 0; margin-top: 1.5rem; }
+    .contact-inner {
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 4.75rem 1.5rem; text-align: center;
+    }
+    .contact-inner .section-title { margin-bottom: 0.7rem; }
+    .contact-inner .section-intro {
+      margin-left: auto; margin-right: auto; margin-bottom: 1.85rem;
+    }
+    .contact-actions {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.9rem;
+    }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 0.85rem 1.35rem; border-radius: 12px;
+      color: var(--text); font-weight: 500; font-size: 0.95rem;
+      transition: all 0.25s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent); background: var(--accent-dim);
+      color: var(--accent-bright); transform: translateY(-2px);
+    }
+    .contact-link.linkedin {
+      background: #0a66c2; border-color: #0a66c2; color: #fff;
+    }
+    .contact-link.linkedin:hover {
+      background: #0c7cd5; border-color: #0c7cd5; color: #fff;
+    }
+
+    footer {
+      max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;
+      text-align: center; color: var(--text-dim); font-size: 0.85rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(8,8,10,0.98); border-bottom: 1px solid var(--border);
+        flex-direction: column; padding: 1rem 1.25rem 1.25rem; gap: 0.25rem;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.75rem 1rem; }
+      .nav-cta { margin-left: 0; text-align: center; }
+      .menu-btn { display: flex; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 6rem; min-height: auto; }
+      .scroll-hint { display: none; }
+    }
+    @media (max-width: 500px) {
+      .hero h1 { font-size: 2.7rem; }
+      .exp-header { flex-direction: column; align-items: flex-start; }
+      .exp-meta { width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="content">
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#home" class="nav-logo">Patrick<span>.</span>Brazell</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <header class="hero" id="home">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Building with data, AI &amp; real-world ops experience
+      </div>
+      <h1>PATRICK<br/><span class="accent">BRAZELL</span></h1>
+      <p class="hero-story">From the warehouse floor to intelligent systems.</p>
+      <p class="hero-tagline">Business <span class="plus">+</span> Data <span class="plus">+</span> AI</p>
+      <p class="hero-desc">
+        Nearly a decade leading operations and delivering measurable cost savings. Now turning that experience into analytics, automation, and AI solutions that solve real business problems.
+      </p>
+      <div class="hero-actions">
+        <a href="https://www.linkedin.com/in/patrick-brazell-06b180134/" target="_blank" rel="noopener noreferrer" class="btn btn-linkedin">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:patrickbrazell555@gmail.com" class="btn btn-ghost">Email</a>
+        <a href="#projects" class="btn btn-ghost">Projects</a>
+        <a href="#experience" class="btn btn-primary">View Experience</a>
+      </div>
+      <div class="hero-links">
+        <a href="https://www.linkedin.com/in/patrick-brazell-06b180134/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn" title="LinkedIn">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="mailto:patrickbrazell555@gmail.com" class="icon-link" aria-label="Email" title="Email">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </a>
+        <a href="#projects" class="icon-link" aria-label="Projects" title="Projects">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        </a>
+      </div>
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <svg class="chevron" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+      </div>
+    </header>
+
+    <section id="about">
+      <p class="section-label reveal">About Me</p>
+      <h2 class="section-title reveal">From the warehouse floor to intelligent systems</h2>
+      <p class="section-intro reveal">
+        I spent nearly a decade leading operations — managing teams, controlling costs, and fixing broken processes. Technology isn’t just something I’m studying. I’m actively experimenting with AI and analytics to solve real business and personal problems.
+      </p>
+      <div class="about-grid">
+        <div class="about-story reveal">
+          <p>
+            My career started on the warehouse floor and in logistics operations. I learned how to lead people under pressure, protect margins, and improve systems that move metal, money, and timelines.
+          </p>
+          <p>
+            Along the way I delivered <strong>more than $400,000 in combined annual cost reductions</strong> — through smarter hauling strategies, tighter expense control, process redesign, and cross-training that made the operation leaner and more capable.
+          </p>
+          <p>
+            That foundation is why I’m pursuing a <strong>Master of Applied Business Analytics</strong> at the University of Arkansas. I want to apply the same intensity I brought to the floor to the problems that data, optimization, and AI can solve at scale.
+          </p>
+          <p>
+            I’m especially interested in how AI can improve real decisions — load planning, resource allocation, forecasting, and operational design. The projects below are active experiments in that direction.
+          </p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-card reveal">
+            <div class="stat-value">$400K+</div>
+            <div class="stat-label">Combined annual cost reductions delivered</div>
+          </div>
+          <div class="stat-card reveal">
+            <div class="stat-value">~9 yrs</div>
+            <div class="stat-label">Hands-on operations &amp; leadership experience</div>
+          </div>
+          <div class="stat-card reveal">
+            <div class="stat-value">MABA</div>
+            <div class="stat-label">Master of Applied Business Analytics · Expected May 2027</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <p class="section-label reveal">Capabilities</p>
+      <h2 class="section-title reveal">Skills that bridge operations and intelligence</h2>
+      <p class="section-intro reveal">
+        Click a category to expand. These skills connect nearly a decade of operational leadership with growing fluency in analytics, visualization, and AI-assisted problem solving.
+      </p>
+      <div class="skills-grid">
+        <div class="skill-card reveal" data-skill>
+          <div class="skill-card-header">
+            <div class="skill-card-left">
+              <div class="skill-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              </div>
+              <h3>Business Analytics</h3>
+            </div>
+            <svg class="skill-chevron" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="skill-body">
+            <ul class="skill-list">
+              <li>Business Analytics</li>
+              <li>Data-Driven Decision Making</li>
+              <li>Cost Control &amp; Profitability</li>
+              <li>Strategic Planning</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-card reveal" data-skill>
+          <div class="skill-card-header">
+            <div class="skill-card-left">
+              <div class="skill-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
+              </div>
+              <h3>Data &amp; Visualization</h3>
+            </div>
+            <svg class="skill-chevron" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="skill-body">
+            <ul class="skill-list">
+              <li>Power BI</li>
+              <li>Microsoft Excel</li>
+              <li>Data Analysis &amp; Reporting</li>
+              <li>Dashboard Thinking</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-card reveal" data-skill>
+          <div class="skill-card-header">
+            <div class="skill-card-left">
+              <div class="skill-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <h3>AI &amp; Technology</h3>
+            </div>
+            <svg class="skill-chevron" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="skill-body">
+            <ul class="skill-list">
+              <li>AI-Assisted Development</li>
+              <li>Optimization Concepts</li>
+              <li>Cybersecurity Fundamentals</li>
+              <li>Systems Thinking</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-card reveal" data-skill>
+          <div class="skill-card-header">
+            <div class="skill-card-left">
+              <div class="skill-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+              </div>
+              <h3>Operations &amp; Supply Chain</h3>
+            </div>
+            <svg class="skill-chevron" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="skill-body">
+            <ul class="skill-list">
+              <li>Warehouse Operations</li>
+              <li>Logistics &amp; Shipping</li>
+              <li>Inventory &amp; Materials Mgmt</li>
+              <li>Process Improvement</li>
+              <li>Quality Control</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-card reveal" data-skill>
+          <div class="skill-card-header">
+            <div class="skill-card-left">
+              <div class="skill-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <h3>Leadership &amp; Management</h3>
+            </div>
+            <svg class="skill-chevron" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="skill-body">
+            <ul class="skill-list">
+              <li>Team Leadership</li>
+              <li>Training &amp; Development</li>
+              <li>Performance Management</li>
+              <li>Change Management</li>
+              <li>Safety Management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <p class="section-label reveal">Experiments &amp; Builds</p>
+      <h2 class="section-title reveal">Projects that explore AI in the real world</h2>
+      <p class="section-intro reveal">
+        Active learning projects — experiments in using AI, analytics, and creative problem-solving against practical challenges. Each one reflects curiosity, iteration, and a focus on useful outcomes.
+      </p>
+      <div class="projects-grid">
+        <article class="project-card reveal">
+          <div class="project-visual">
+            <div class="grid-overlay"></div>
+            <div class="icon-wrap">
+              <svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+                <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <span class="project-status"><span class="pulse-dot"></span> In Progress</span>
+            <h3>AI-Powered Truck Load Optimization &amp; Packing</h3>
+            <p>
+              Exploring how AI, analytics, inventory data, operational constraints, and optimization can improve truck-load planning and packing decisions — turning warehouse experience into smarter allocation.
+            </p>
+            <div class="project-meta">
+              <strong>Focus:</strong> Problem framing from real ops constraints · optimization concepts · decision support for load planning
+            </div>
+            <div class="project-tech">
+              <span class="tech-pill">AI / Optimization</span>
+              <span class="tech-pill">Analytics</span>
+              <span class="tech-pill">Logistics</span>
+              <span class="tech-pill">Operations Research</span>
+            </div>
+            <div class="project-actions">
+              <span class="btn btn-ghost btn-sm" style="cursor:default;opacity:0.75">Coming soon</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-visual">
+            <div class="grid-overlay"></div>
+            <div class="icon-wrap">
+              <svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <span class="project-status"><span class="pulse-dot"></span> In Progress</span>
+            <h3>Dream House Remodeler</h3>
+            <p>
+              An AI-assisted web experience for visualizing and planning home remodeling ideas — combining creative design exploration with practical decision support.
+            </p>
+            <div class="project-meta">
+              <strong>Focus:</strong> AI-assisted product thinking · interface design · turning ideas into interactive prototypes
+            </div>
+            <div class="project-tech">
+              <span class="tech-pill">AI-Assisted</span>
+              <span class="tech-pill">Web App</span>
+              <span class="tech-pill">Creative Design</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://replit.com/@pdbrazel/Dream-House-Remodeler" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                View on Replit
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-visual">
+            <div class="grid-overlay"></div>
+            <div class="icon-wrap">
+              <svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <span class="project-status"><span class="pulse-dot"></span> In Progress</span>
+            <h3>AI-Assisted Clothing / Outfit Website</h3>
+            <p>
+              A website concept designed to help people choose clothing and outfits — experimenting with AI-assisted recommendations, interface design, and practical decision support.
+            </p>
+            <div class="project-meta">
+              <strong>Focus:</strong> Recommendation-style thinking · UX experimentation · AI as a creative collaborator
+            </div>
+            <div class="project-tech">
+              <span class="tech-pill">AI-Assisted</span>
+              <span class="tech-pill">UX / Product</span>
+              <span class="tech-pill">Recommendations</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://stitch.withgoogle.com/projects/4709319741467295251?pli=1" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                View Project
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience">
+      <p class="section-label reveal">Career</p>
+      <h2 class="section-title reveal">Where results were measured in dollars and teams</h2>
+      <p class="section-intro reveal">
+        Click a role to expand measurable impact. This operational foundation is what I now bring into analytics and AI.
+      </p>
+      <div class="exp-cards">
+        <div class="exp-card reveal" id="exp1">
+          <div class="exp-header" onclick="toggleExp('exp1')">
+            <div class="exp-header-left">
+              <h3>Warehouse Supervisor</h3>
+              <div class="exp-company">Yaffe Iron &amp; Metal · Fort Smith, AR</div>
+            </div>
+            <div class="exp-meta">
+              <span>Nov 2017 – Present</span>
+              <button class="exp-toggle" aria-label="Expand" type="button">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="exp-body">
+            <div class="exp-details">
+              <div class="impact-row">
+                <span class="impact-pill">~$300K annual savings (hauling)</span>
+                <span class="impact-pill">~$120K annual savings (expenses)</span>
+              </div>
+              <div class="exp-bridge">
+                <strong>Why this matters for analytics &amp; AI:</strong> Real constraints, measurable outcomes, and process discipline — the same inputs that make optimization, forecasting, and decision-support systems useful.
+              </div>
+              <ul>
+                <li>Generated approximately <strong style="color:var(--success)">$300,000 in annual cost savings</strong> by addressing rising contractor hauling costs and increasing use of company vehicles and internal staff.</li>
+                <li>Reduced monthly operating expenses by approximately <strong style="color:var(--success)">$120,000 annually</strong> through expense monitoring and cost-control initiatives.</li>
+                <li>Supervise and train scrap inspectors, baler operators, forklift operators, and other operational personnel.</li>
+                <li>Oversee material inspection, quality control, accurate weighing, and accounting of incoming ferrous and nonferrous materials.</li>
+                <li>Led a process-improvement initiative to maintain compliance with federally mandated forklift tote weight limits while protecting operational profitability.</li>
+                <li>Developed an improved process for higher-grade copper water meters; completed implementation ahead of schedule and trained staff on the new workflow.</li>
+                <li>Manage staffing through direct hiring and temporary partnerships to maintain production levels.</li>
+                <li>Conduct new-hire and annual evaluations, set performance expectations, and identify growth opportunities.</li>
+                <li>Crosstrain employees across departments to strengthen operational knowledge and improve material identification and value recovery.</li>
+                <li>Consolidate positions and responsibilities to improve efficiency, reduce costs, and support increased sales.</li>
+                <li>Maintain regular communication with corporate leadership on operations, staffing, productivity, and business needs.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <p class="section-label reveal">Learning Path</p>
+      <h2 class="section-title reveal">Building the analytical foundation</h2>
+      <p class="section-intro reveal">
+        Formal education that pairs real-world operations experience with modern analytics and technology.
+      </p>
+      <div class="edu-grid">
+        <div class="edu-featured reveal">
+          <div class="edu-status"><span class="dot"></span> Current · In Progress</div>
+          <h3>Master of Applied Business Analytics</h3>
+          <div class="edu-school">Sam M. Walton College of Business, University of Arkansas — Fayetteville, AR</div>
+          <div class="edu-progress-wrap">
+            <div class="edu-progress-track">
+              <div class="edu-progress-bar"></div>
+            </div>
+          </div>
+          <div class="edu-timeline">
+            Started Aug 2025 · Expected Graduation: <span class="grad-date">May 2027</span>
+          </div>
+        </div>
+        <div class="edu-secondary reveal">
+          <h3>Bachelor of Business Administration</h3>
+          <div class="edu-school">University of Arkansas Fort Smith — College of Business &amp; Industry</div>
+          <div class="edu-dates">May 2014 – Dec 2018</div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top:2rem">
+        <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:0.85rem;color:var(--text-muted)">Certifications</h3>
+        <div class="cert-grid">
+          <div class="cert-card">
+            <div class="cert-label">Certification</div>
+            <h4>Cisco Cyber Threat Management</h4>
+          </div>
+          <div class="cert-card">
+            <div class="cert-label">Certification</div>
+            <h4>Cisco Introduction to Cybersecurity</h4>
+          </div>
+          <div class="cert-card">
+            <div class="cert-label">Certification</div>
+            <h4>TOMO Supervisory Training</h4>
+          </div>
+          <div class="cert-card">
+            <div class="cert-label">Certification</div>
+            <h4>Forklift Operations</h4>
+          </div>
+          <div class="cert-card">
+            <div class="cert-label">Certification</div>
+            <h4>Leadership</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="contact-section" id="contact">
+      <div class="contact-inner">
+        <p class="section-label reveal">Next Step</p>
+        <h2 class="section-title reveal">Let's build something that matters</h2>
+        <p class="section-intro reveal">
+          Whether you're a recruiter, hiring manager, professor, or professional contact — I'd welcome a conversation about operations, analytics, AI, technology, or opportunities where real-world experience meets intelligent systems.
+        </p>
+        <div class="contact-actions reveal">
+          <a href="https://www.linkedin.com/in/patrick-brazell-06b180134/" target="_blank" rel="noopener noreferrer" class="contact-link linkedin">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            Connect on LinkedIn
+          </a>
+          <a href="mailto:patrickbrazell555@gmail.com" class="contact-link">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            patrickbrazell555@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Patrick Brazell · Fort Smith, AR · Business + Data + AI</p>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const LABELS = [
+      'AI', 'DATA', 'ANALYTICS', 'POWER BI', 'SQL', 'EXCEL',
+      'AUTOMATION', 'BUSINESS', 'LOGISTICS', 'MACHINE LEARNING',
+      'OPTIMIZATION', 'DASHBOARDS'
+    ];
+    const nodes = [];
+    const NODE_COUNT = 28;
+    const ACCENT = { r: 255, g: 90, b: 31 };
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    function createNodes() {
+      nodes.length = 0;
+      for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.28,
+          vy: (Math.random() - 0.5) * 0.28,
+          label: LABELS[i % LABELS.length],
+          size: Math.random() * 0.4 + 0.65,
+          alpha: Math.random() * 0.25 + 0.12
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+
+      ctx.strokeStyle = 'rgba(255, 90, 31, 0.025)';
+      ctx.lineWidth = 1;
+      const g = 64;
+      for (let x = 0; x < width; x += g) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+      }
+      for (let y = 0; y < height; y += g) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+      }
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 160) {
+            const a = (1 - dist / 160) * 0.18;
+            ctx.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${a})`;
+            ctx.lineWidth = 0.7;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (const n of nodes) {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > width) n.vx *= -1;
+        if (n.y < 0 || n.y > height) n.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 2.2 * n.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${0.45 * n.size})`;
+        ctx.fill();
+
+        ctx.font = `${10 * n.size}px Inter, system-ui, sans-serif`;
+        ctx.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${n.alpha})`;
+        ctx.textAlign = 'center';
+        ctx.fillText(n.label, n.x, n.y - 8 * n.size);
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    createNodes();
+    draw();
+    window.addEventListener('resize', () => { resize(); createNodes(); });
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    function toggleExp(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    document.querySelectorAll('[data-skill]').forEach(card => {
+      card.addEventListener('click', () => {
+        const wasOpen = card.classList.contains('open');
+        document.querySelectorAll('[data-skill]').forEach(c => c.classList.remove('open'));
+        if (!wasOpen) card.classList.add('open');
+      });
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('section[id], header[id], div[id="contact"]');
+    const navAs = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+      });
+      navAs.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
